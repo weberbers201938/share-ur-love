@@ -8,7 +8,8 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 const total = new Map();
 app.get('/total', (req, res) => {
-  const data = Array.from(total.values()).map(link => ({
+  const data = Array.from(total.values()).map((link, index)  => ({
+    session: index + 1,
     url: link.url,
     count: link.count,
     id: link.id,
@@ -19,7 +20,7 @@ app.get('/total', (req, res) => {
 app.get('/', (res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
-app.get('/api/submit', async (req, res) => {
+app.post('/api/submit', async (req, res) => {
   const {
     cookie,
     url,
@@ -48,6 +49,7 @@ app.get('/api/submit', async (req, res) => {
     });
   }
 });
+
 async function share(cookies, url, amount, interval) {
   const id = await getPostID(url);
   const accessToken = await getAccessToken(cookies);
@@ -73,7 +75,7 @@ async function share(cookies, url, amount, interval) {
   let timer;
   async function sharePost() {
     try {
-      const response = await axios.get(`https://graph.facebook.com/me/feed?link=https://m.facebook.com/${id}&published=0&access_token=${accessToken}`, {}, {
+      const response = await axios.post(`https://graph.facebook.com/me/feed?link=https://m.facebook.com/${id}&published=0&access_token=${accessToken}`, {}, {
         headers
       });
       if (response.status !== 200) {
@@ -100,7 +102,7 @@ async function share(cookies, url, amount, interval) {
 }
 async function getPostID(url) {
   try {
-    const response = await axios.get('https://id.traodoisub.com/api.php', `link=${encodeURIComponent(url)}`, {
+    const response = await axios.post('https://id.traodoisub.com/api.php', `link=${encodeURIComponent(url)}`, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
