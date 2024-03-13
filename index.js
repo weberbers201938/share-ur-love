@@ -99,7 +99,6 @@ async function share(cookies, url, amount, interval) {
     clearInterval(timer);
     total.delete(postId);
   }, amount * interval * 1000);
-  res.json({ success: `Submitted Successfully` })
 }
 async function getPostID(url) {
   try {
