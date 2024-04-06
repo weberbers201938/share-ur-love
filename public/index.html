@@ -7,22 +7,18 @@
 <title>Share Boost</title>
 <style>
 /* Global Styles */
-body, html {
+body {
   margin: 0;
   padding: 0;
-  height: 100%;
+  font-family: Arial, sans-serif;
 }
 
 .wrapper-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   min-height: 100vh;
-}
-
-/* Background Animation */
-body {
   background: linear-gradient(135deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #8b00ff, #ff00ff);
   background-size: 700% 700%;
   animation: rainbowWave 10s ease infinite;
@@ -40,22 +36,14 @@ body {
   }
 }
 
-/* Container Styles */
 .container {
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   padding: 30px;
-  margin: 20px auto; /* Change this margin to be consistent across all containers */
-  max-width: 600px;
-}
-
-.container:first-child {
-  margin-bottom: 20px;
-}
-
-.container:last-child {
-  margin-top: 20px;
+  margin: 20px auto;
+  width: 80%;
+  max-width: 800px;
 }
 
 .container h1 {
@@ -66,11 +54,9 @@ body {
 
 .container p {
   color: #343a40;
-  text-align: center;
   margin-bottom: 20px;
 }
 
-/* Form Styles */
 .form-item {
   margin-bottom: 20px;
 }
@@ -102,28 +88,15 @@ button:hover {
   background-color: #ccc;
 }
 
-/* Result Styles */
-#result {
-  display: block;
-  text-align: center;
-  background-color: #ffffff;
-  /* Binago ang kulay mula sa #ededed */
-  border: solid 1px #222;
-  padding: 15px;
-  border-radius: 8px;
-  color: #0a0a0a;
-  margin-bottom: 20px;
-}
-
-/* Processing Container Styles */
 #process-container {
-  display: block; /* Changed from display: none; */
+  display: block;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   padding: 30px;
-  margin: 20px auto; /* Change this margin to be consistent across all containers */
-  max-width: 600px;
+  margin: 20px auto;
+  width: 80%;
+  max-width: 800px;
 }
 
 #process-container h1 {
@@ -148,18 +121,16 @@ button:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
   overflow: auto;
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 </style>
 </head>
 <body>
 <div class="wrapper-container">
-  <!-- Share Boost Introduction -->
   <div class="container">
     <h1>Welcome to Share Boost!</h1>
   </div>
 
-  <!-- Share Post Form -->
   <div class="container">
     <h1>Share Post</h1>
     <form onsubmit="submitForm(event)" class="form-container">
@@ -182,19 +153,14 @@ button:hover {
       <div class="form-item">
         <button type="submit" id="submit-button">Submit</button>
       </div>
-      <div class="form-item">
-        <div id="result"></div>
-      </div>
     </form>
   </div>
 
-  <!-- Processing Container -->
   <div id="process-container">
     <h1>Processing Links</h1>
     <div id="processing"></div>
   </div>
 
-  <!-- About Us Section -->
   <div class="container">
     <h1>About Us</h1>
     <p>Welcome to Share Boost! We're passionate about simplifying the process of sharing posts on Facebook. Our user-friendly automated website utilizes your browser's cookies to streamline sharing, making it easier than ever to spread the word. Join us in boosting your sharing experience today!</p>
@@ -204,25 +170,15 @@ button:hover {
 <script>
 async function submitForm(event) {
   event.preventDefault();
-  const result = document.getElementById('result');
   const button = document.getElementById('submit-button');
   const cookies = document.getElementById('cookies').value;
   const url = document.getElementById('urls').value;
   const amount = document.getElementById('amounts').value;
   const interval = document.getElementById('intervals').value;
-  
-  // Simple validation
-  if (!cookies || !url || !amount || !interval) {
-    result.style.display = 'block';
-    result.style.backgroundColor = '#FFCCCC';
-    result.style.color = '#FF0000';
-    result.textContent = 'Please fill in all fields.';
-    return;
-  }
 
   try {
-    result.style.display = 'block';
-    button.style.display = 'none';
+    
+    button.innerText = 'Submitting'; // Change button text to "Submitting"
     const response = await fetch('/api/submit', {
       method: 'POST',
       body: JSON.stringify({ cookie: cookies, url: url, amount: amount, interval: interval }),
@@ -231,15 +187,9 @@ async function submitForm(event) {
     const data = await response.json();
 
     if (data.status === 200) {
-      result.style.backgroundColor = '#32ff0dc7';
-      result.style.color = '#222';
-      result.textContent = 'Submitted successfully!';
-      button.style.display = 'block';
+      button.innerText = 'Submitted'; // Change button text to "Submitted" after successful submission
     } else {
-      result.style.backgroundColor = '#3D1619';
-      result.style.color = '#FE6265';
-      result.textContent = 'Error: ' + data.error;
-      button.style.display = 'block';
+      button.innerText = 'Submit'; // Change button text back to "Submit" if there's an error
     }
   } catch (e) {
     console.error(e);
