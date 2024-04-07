@@ -289,6 +289,8 @@ async function linkOfProcessing() {
   try {
     const container = document.getElementById('processing');
     const processContainer = document.getElementById('process-container');
+    processContainer.style.display = 'block'; // Itakda ang display property sa block
+
     const initialResponse = await fetch('/total');
 
     if (!initialResponse.ok) {
@@ -297,7 +299,7 @@ async function linkOfProcessing() {
 
     const initialData = await initialResponse.json();
     if (initialData.length === 0) {
-      processContainer.style.display = 'none';
+      processContainer.style.display = 'none'; // Itakda ang display property sa none kung walang data
       return;
     }
     initialData.forEach((link, index) => {
@@ -340,8 +342,6 @@ function update(card, count, id, index, target) {
   let container = card.querySelector('.count-text');
   container.textContent = `${index + 1}. ID: ${id} | ${count}/${target}`;
 }
-
-linkOfProcessing();
 
  // I-hide ang button sa pagsimula
 document.getElementById('copy-button').style.display = 'none';
@@ -387,7 +387,7 @@ document.getElementById('copy-button').addEventListener('click', function() {
     alert('Failed to copy appstate. Please try again.');
   });
 });
-
+linkOfProcessing();
 </script>
 </body>
-</html>
+  </html>
