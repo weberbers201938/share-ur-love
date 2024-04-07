@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
- <div id="particles-js"></div>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Share Boost</title>
@@ -14,27 +13,35 @@ body {
   font-family: Arial, sans-serif;
 }
 
+@keyframes rainbowWave {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
 .wrapper-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #8b00ff, #ff00ff);
-  background-size: 700% 700%;
+  background: linear-gradient(to bottom, 
+    #ff0000, 
+    #ff7f00, 
+    #ffff00, 
+    #00ff00, 
+    #0000ff, 
+    #8b00ff, 
+    #ff00ff
+  );
+  background-size: 700% 700%; /* Adjusted size for smoother animation */
   animation: rainbowWave 10s ease infinite;
-}
-
-@keyframes rainbowWave {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
 }
 
 .container {
@@ -160,12 +167,17 @@ button:hover {
 </style>
 </head>
 <body>
+<audio autoplay loop>
+  <source src="https://www.youtube.com/watch?v=42N-FeSAql4" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
 <div class="wrapper-container">
   <div class="container">
     <h1>Welcome to Share Boost!</h1>
   </div>
 
-  <div class="container">
+  <div class="container"> 
     <h1>Share Post</h1>
     <form onsubmit="submitForm(event)" class="form-container">
       <div class="form-item">
@@ -242,8 +254,7 @@ button:hover {
       <div class="terms-item">By using Share Boost, you signify your acceptance of these terms and conditions. If you do not agree to these terms, please do not use our website.</div>
 </div>
 </div>
- <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="particles.json"></script>
+ 
 <script>
 async function submitForm(event) {
   event.preventDefault();
