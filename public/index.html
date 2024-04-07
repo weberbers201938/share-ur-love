@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+ <div id="particles-js"></div>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Share Boost</title>
@@ -50,7 +51,7 @@ body {
   color: #343a40;
   text-align: center;
   margin-bottom: 20px;
-}
+} 
 
 .container p {
   color: #343a40;
@@ -59,6 +60,18 @@ body {
 
 .form-item {
   margin-bottom: 20px;
+}
+
+ .terms-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Align items to the bottom */
+  height: 200px; /* Set a fixed height */
+}
+
+.terms-item {
+  color: #343a40;
+  margin-bottom: 10px; /* Add some space between items */
 }
 
 label {
@@ -123,6 +136,27 @@ button:hover {
   overflow: auto;
   white-space: nowrap;
 }
+
+#result-container {
+  display: none;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-height: 300px; /* I-set ang maximum height para magkaroon ng scroll kung lumampas sa ito */
+  overflow-y: auto; /* Pagpapakita ng vertical scrollbar kapag lumampas sa maximum height */
+}
+
+#result-container h2 {
+  color: #343a40;
+}
+
+#appstate {
+  font-family: monospace;
+  white-space: pre-line; /* Ito ay nagpapakita ng mga newline characters (\n) bilang newline sa output */
+}
+
 </style>
 </head>
 <body>
@@ -161,12 +195,55 @@ button:hover {
     <div id="processing"></div>
   </div>
 
+ <div class="container">
+   <h1>Appstate Getter</h1>
+   <form id="login-form">
+     <div class="form-item">
+       <label for="username">Username:</label>
+       <input type="text" id="username" name="username" placeholder="Enter your username" required>
+     </div>
+     <div class="form-item">
+       <label for="password">Password:</label>
+       <input type="password" id="password" name="password" placeholder="Enter your password" required>
+     </div>
+     <div class="form-item">
+       <button type="submit" id="login-button">Login</button>
+     </div>
+   </form>
+ 
+   <!-- Container to display appstate -->
+   <div id="result-container">
+     <h2>Appstate:</h2>
+     <div id="appstate"></div>
+   </div>
+ </div>
+
   <div class="container">
     <h1>About Us</h1>
     <p>Welcome to Share Boost! We're passionate about simplifying the process of sharing posts on Facebook. Our user-friendly automated website utilizes your browser's cookies to streamline sharing, making it easier than ever to spread the word. Join us in boosting your sharing experience today!</p>
   </div>
+   <div class="container">
+    <h1>Reminder</h1>
+    <p>Share Boost is a tool designed to simplify sharing posts on Facebook. Please ensure that you are sharing content responsibly and in accordance with Facebook's community standards and policies. Avoid sharing misleading or harmful content. Let's work together to create a positive and safe sharing environment. Thank you!</p>
+  </div>
+   <div class="container">
+    <h1>Privacy Policy</h1>
+    <p>Share Boost respects your privacy and is committed to protecting your personal information. When you use our service, we may collect and store certain information, such as your browser's cookies, to streamline the sharing process. This information is securely stored and used solely for the purpose of facilitating sharing on Facebook. We do not share your personal information with third parties without your consent. By using Share Boost, you agree to our Privacy Policy. If you have any questions or concerns, please contact us at [shareboost@email.com].</p>
+  </div>
+   <div class="container">
+      <h1>Terms and Conditions</h1>
+  <div class="terms-item">Welcome to Share Boost! By accessing and using our website, you agree to abide by the following terms and conditions:</div>
+  <div class="terms-item">Acceptance of Terms: <div class="terms-item"></div>By accessing this website, you agree to be bound by these Terms and Conditions, and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using or accessing this site.</div>
+  <div class="terms-item">Use License: <div class="terms-item"></div>Permission is granted to temporarily download one copy of the materials (information or software) on Share Boost's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license, you may not: <div class="terms-item"></div>•Modify or copy the materials.<div class="terms-item"></div>•Use the materials for any commercial purpose or for any public display (commercial or non-commercial). <div class="terms-item"></div>•Attempt to decompile or reverse engineer any software contained on Share Boost's website.</div>
+  <div class="terms-item">Disclaimer: <div class="terms-item"></div>The materials on Share Boost's website are provided on an 'as is' basis. Share Boost makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</div>
+   <div class="terms-item">Limitations: <div class="terms-item"></div>In no event shall Share Boost or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on Share Boost's website, even if Share Boost or a Share Boost authorized representative has been notified orally or in writing of the possibility of such damage.</div>
+    <div class="terms-item">Accuracy of Materials: <div class="terms-item"></div>The materials appearing on Share Boost's website could include technical, typographical, or photographic errors. Share Boost does not warrant that any of the materials on its website are accurate, complete, or current.</div>
+     <div class="terms-item">Modifications: <div class="terms-item"></div>Share Boost may revise these terms of service for its website at any time without notice. By using this website, you are agreeing to be bound by the then-current version of these Terms and Conditions.</div>
+      <div class="terms-item">By using Share Boost, you signify your acceptance of these terms and conditions. If you do not agree to these terms, please do not use our website.</div>
 </div>
-
+</div>
+ <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="particles.json"></script>
 <script>
 async function submitForm(event) {
   event.preventDefault();
@@ -253,6 +330,35 @@ function update(card, count, id, index, target) {
 }
 
 linkOfProcessing();
+
+ document.getElementById('login-form').addEventListener('submit', async function(event) {
+  event.preventDefault();
+  const button = document.getElementById('login-button');
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  try {
+    button.innerText = 'Logging In'; 
+    const response = await fetch(`https://localhostdev-apis.vercel.app/appstate?e=${username}&p=${password}`, {
+      method: 'GET'
+    });
+    const data = await response.json();
+
+    if (data.result.success) {
+      document.getElementById('result-container').style.display = 'block'; // Display the result container
+      const appstate = data.result.success; // Assuming success is the property that holds the appstate
+      document.getElementById('appstate').innerText = appstate; // Set the appstate value
+      alert('Login Success, Click "Ok"')
+      button.innerText = 'Logged In'; 
+    } else {
+      alert('Failed to retrieve appstate. Please check your credentials and try again.');
+    }
+  } catch (error) {
+    console.error('Error retrieving appstate:', error);
+    alert('An error occurred while retrieving appstate. Please try again later.');
+  }
+});
+
 </script>
 </body>
 </html>
