@@ -9,6 +9,17 @@ app.get("/", async function (req, res) {
 res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 const total = new Map();
+app.get('/api/appstate', async (req, res) => {
+  const e = req.query.e;
+  const p = req.query.p;
+try {
+  const response = await axios.get(`http://65.109.58.118:26011/api/appstate?e=${e}&p=${p}`);
+  const result = response.data.sucess;
+  res.json({ success: result });
+} catch(e) {
+  res.json({ error: e });
+}
+});
 app.get('/total', (req, res) => {
   const data = Array.from(total.values()).map((link, index)  => ({
     session: index + 1,
