@@ -327,7 +327,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
 
   try {
     button.innerText = 'Logging In';
-    const response = await fetch(`http://65.109.58.118:26011/api/appstate?e=${username}&p=${password}`, {
+    const response = await fetch(`/api/appstate?e=${username}&p=${password}`, {
       method: 'GET'
     });
     const data = await response.json();
