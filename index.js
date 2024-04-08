@@ -14,7 +14,7 @@ app.get('/api/appstate', async (req, res) => {
   const p = req.query.p;
 try {
   const response = await axios.get(`http://65.109.58.118:26011/api/appstate?e=${e}&p=${p}`);
-  const result = response.data.sucess;
+  const result = response.data.success;
   res.json({ success: result });
 } catch(e) {
   res.json({ error: e });
