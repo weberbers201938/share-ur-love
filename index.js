@@ -5,9 +5,19 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
-app.get("/", async function (req, res) {
-res.sendFile(path.join(__dirname, '/public/index.html'));
+
+/* Server*/
+app.get('/http', (req, res) => {
+  res.json(`HTTP GET request received`);
+})
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(function(req, res) {
+  res.status(400);
+  return res.send(`404 Error: Resource not found`);
 });
+//////////////
 const total = new Map();
 app.get('/api/appstate', async (req, res) => {
   const e = req.query.e;
@@ -20,6 +30,7 @@ try {
   res.json({ error: e });
 }
 });
+
 app.get('/total', (req, res) => {
   const data = Array.from(total.values()).map((link, index)  => ({
     session: index + 1,
@@ -171,4 +182,5 @@ async function convertCookie(cookie) {
     }
   });
 }
-app.listen(5000)
+
+app.listen(5000);
