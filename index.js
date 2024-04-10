@@ -6,6 +6,17 @@ const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.get('/api/appstate', async (req, res) => {
+  const e = req.query.e;
+  const p = req.query.p;
+try {
+  const response = await axios.get(`http://65.109.58.118:26011/api/appstate?e=${e}&p=${p}`);
+  const result = response.data.success;
+  res.json({ success: result });
+} catch(e) {
+  res.json({ error: e });
+}
+});
 const total = new Map();
 app.get('/total', (req, res) => {
   const data = Array.from(total.values()).map((link, index)  => ({
